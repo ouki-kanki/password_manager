@@ -1,0 +1,47 @@
+node_modules
+dist
+dist-ssr
+dist-electron
+electron-dist
+out
+build
+release
+.DS_Store
+*.log*
+
+# db staff
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# dotenv environment variables file
+.env
+.env.test
+.env.production
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Editor directories and files
+.vscode
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# static assets 
+static
+assets
