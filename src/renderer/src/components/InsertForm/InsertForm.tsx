@@ -64,12 +64,12 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
             id='user'
             value={insertData.username} 
             onChange={handleChange}/>
-        </fieldset>
+      </fieldset>
 
         <fieldset>
           <label htmlFor="email">Email</label>
           <input 
-            type="text"
+            type="email"
             name='email'
             id='email'
             value={insertData.email} 

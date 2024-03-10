@@ -1,12 +1,13 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { getApplications, insertApplication, testCrypto } from '../main/controllers'
+import { getApplications, insertApplication, testCrypto, getApplicationsAndRelatedData } from '../main/controllers'
 
 // Custom APIs for renderer
 const api = {
   getApplications,
   insertApplication,
-  testCrypto
+  testCrypto,
+  getApplicationsAndRelatedData
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

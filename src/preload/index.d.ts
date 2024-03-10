@@ -6,9 +6,10 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      getApplications: () => void,
-      insertApplication: (value: IInsertData) => void
-      testCrypto: (value: string) => void 
+      getApplications: () => void;
+      getApplicationsAndRelatedData: () => void;
+      insertApplication: (value: IInsertData) => void;
+      testCrypto: (value: string) => void;
     }
   }
 }

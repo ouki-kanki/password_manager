@@ -1,16 +1,58 @@
 import { db } from "../db/dbMgr";
 import { Statement } from 'better-sqlite3'
 import type { IInsertData } from '../../types'
-import { encrypt } from "../utils/encrypt";
+import { encrypt, decrypt } from "../utils/encrypt";
+
+
+interface IApplicationData {
+  name: string;
+  username: string;
+  email: string;
+  password: string
+}
 
 export const getApplications = async (): Promise<void> => {
   try {
     if (db) {
-      console.log("yyoyo", db)
       const query = 'SELECT * FROM application'
       const readQuery = db.prepare(query)
       console.log(readQuery.all())
     } 
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getApplicationsAndRelatedData = (): void => {
+  try {
+    if (!db) {
+      throw new Error("db is down")
+    }
+
+    const query = ' SELECT a.name, u.value as username, e.value as email, p.value as password \
+                    FROM application a \
+                    INNER JOIN credentials c \
+                    ON c.application_id = a.id \
+                    LEFT JOIN password p \
+                    ON p.credentials_id = c.id \
+                    LEFT JOIN username u \
+                    ON u.credentials_id = c.id \
+                    LEFT JOIN email e \
+                    ON e.credentials_id = c.id'
+
+    const readQuery = db.prepare(query)
+    const data = readQuery.all() as IApplicationData[];
+    
+    const decryptedData = data.map(d => {
+      if (d.password) {
+        d.password = decrypt(d.password)
+      }
+      return d
+    })
+
+    console.log("the decrypted data", decryptedData)
+
+
   } catch (error) {
     console.log(error)
   }
@@ -58,6 +100,15 @@ export const insertApplication = async ({
               'INSERT INTO email (credentials_id, value) VALUES (?, ?)')
             insertToEmail.run(credId, email)
           }
+
+          if (password) {
+            const encryptedPass = encrypt(password);
+            
+            const insertToPass = db.prepare(
+              'INSERT INTO password (credentials_id, value) VALUES (?, ?)'
+            )
+            insertToPass.run(credId, encryptedPass)
+          }
         }
       } catch (error) {
         console.log("the error", error)
@@ -68,5 +119,5 @@ export const insertApplication = async ({
 }
 
 export const testCrypto = (value: string): void => {
-  encrypt(value, process.env.ENCRYPT_KEY as string);
+  encrypt(value);
 }
