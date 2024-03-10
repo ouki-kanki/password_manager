@@ -3,6 +3,11 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+import { Menu, MenuItem } from 'electron'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -34,6 +39,16 @@ function createWindow(): void {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
+
+
+// create a menu
+const menu = new Menu()
+const menuItem = new MenuItem({
+  label: 'Inspect Element',
+  click: (): void => {
+    console.log("yoyo")
+  }
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

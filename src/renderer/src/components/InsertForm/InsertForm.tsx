@@ -1,4 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
+import styles from './insertForm.module.css'
 import type { IInsertData } from '../../../../types'
 
 
@@ -26,6 +27,11 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
 
   const handleSubmit = (data: IInsertData) => (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    // TODO: validate the data
+    if (!data.applicationName) {
+      return
+    }
+
     handleInsertApplicationData(data)
 
     setInsertData({
@@ -38,13 +44,51 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
 
   return (
     <>
-      <form onSubmit={handleSubmit(insertData)}>
-        <input 
-          type="text"
-          name='applicationName'
-          value={insertData.applicationName} 
-          onChange={handleChange}/>
-        <button type='submit'>insert Application</button>
+      <form onSubmit={handleSubmit(insertData)} className={styles.formContainer}>
+        <fieldset>
+          <label htmlFor="app_name">Application name</label>
+          <input
+            autoFocus
+            type="text"
+            name='applicationName'
+            id='app_name'
+            value={insertData.applicationName} 
+            onChange={handleChange}/>
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="user">Username</label>
+          <input 
+            type="text"
+            name='username'
+            id='user'
+            value={insertData.username} 
+            onChange={handleChange}/>
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="email">Email</label>
+          <input 
+            type="text"
+            name='email'
+            id='email'
+            value={insertData.email} 
+            onChange={handleChange}/>
+        </fieldset>
+
+        <fieldset>
+          <label htmlFor="password">Password</label>
+          <input 
+            type="password"
+            name='password'
+            id='password'
+            value={insertData.password} 
+            onChange={handleChange}/>
+        </fieldset>
+
+        <fieldset className={styles.action}>
+          <button type='submit'>insert Application</button>
+        </fieldset>
       </form>
     </>
   )

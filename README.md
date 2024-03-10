@@ -1,6 +1,7 @@
 # pass_man_v4
 
-An Electron application with React and TypeScript
+## A password manager made with electron, React, TypeScript & sqlite3
+* based on electron build tooling [electron-vite](https://github.com/alex8088/electron-vite)
 
 ## Recommended IDE Setup
 

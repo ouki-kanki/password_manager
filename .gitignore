@@ -13,6 +13,7 @@ release
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+*.sql
 
 # Optional npm cache directory
 .npm

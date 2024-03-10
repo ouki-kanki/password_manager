@@ -24,6 +24,7 @@ function App(): JSX.Element {
         &nbsp;and <span className="ts">TypeScript</span>
       </div>
       <button onClick={getApplications}>get Applications test</button>
+      <button onClick={() => window.api.testCrypto('james')}>test crypto</button>
       <InsertForm
         handleInsertApplicationData={hadnleInsertApplicationData}
       />

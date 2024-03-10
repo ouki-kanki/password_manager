@@ -8,6 +8,7 @@ declare global {
     api: {
       getApplications: () => void,
       insertApplication: (value: IInsertData) => void
+      testCrypto: (value: string) => void 
     }
   }
 }
