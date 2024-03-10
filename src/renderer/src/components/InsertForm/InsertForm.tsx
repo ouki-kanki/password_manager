@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
-import styles from './insertForm.module.css'
+import './insertForm.scss'
 import type { IInsertData } from '../../../../types'
 
 
@@ -31,11 +31,14 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
     if (!data.applicationName) {
       return
     }
+    
 
     handleInsertApplicationData(data)
 
     setInsertData({
       applicationName: '',
+
+
       username: '',
       email: '',
       password: ''
@@ -44,7 +47,7 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
 
   return (
     <>
-      <form onSubmit={handleSubmit(insertData)} className={styles.formContainer}>
+      <form onSubmit={handleSubmit(insertData)} className='insert-form__container'>
         <fieldset>
           <label htmlFor="app_name">Application name</label>
           <input
@@ -86,7 +89,8 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
             onChange={handleChange}/>
         </fieldset>
 
-        <fieldset className={styles.action}>
+
+        <fieldset className='insert-form__action'>
           <button type='submit'>insert Application</button>
         </fieldset>
       </form>

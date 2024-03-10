@@ -28,7 +28,7 @@ export const getApplicationsAndRelatedData = (): void => {
     if (!db) {
       throw new Error("db is down")
     }
-
+    
     const query = ' SELECT a.name, u.value as username, e.value as email, p.value as password \
                     FROM application a \
                     INNER JOIN credentials c \
@@ -49,15 +49,11 @@ export const getApplicationsAndRelatedData = (): void => {
       }
       return d
     })
-
     console.log("the decrypted data", decryptedData)
-
-
   } catch (error) {
     console.log(error)
   }
 }
-
 
 export const insertApplication = async ({
   applicationName,

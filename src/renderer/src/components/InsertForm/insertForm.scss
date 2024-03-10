@@ -1,0 +1,18 @@
+// @use '../../styles/main' as *;
+
+.insert-form__container {
+  width: 350px;
+
+  fieldset {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.insert-form__container .insert-form__action {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+
