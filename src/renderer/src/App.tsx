@@ -6,7 +6,7 @@ import { useGetPath } from './hooks/useGetPath'
 
 import { Sidebar } from './components/Sidebar/Sidebar'
 import { InsertForm } from './components/InsertForm/InsertForm'
-import { Dashboard } from './pages/Dashboard';
+import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Home } from './pages/Home/Home';
 
 import { SettingsLayout } from './components/Layouts/SettingsLayout/SettingsLayout';

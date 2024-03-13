@@ -32,7 +32,6 @@ export const Sidebar = ({ isSidebarVisible }: ISidebarProps): JSX.Element => {
            className={({ isActive }) => isActive ? 'sidebar__container__link-active' : ''}
           >Settings</NavLink>
         </li>
-        <li>boing</li>
       </nav>
     </div>
   )

@@ -9,3 +9,9 @@ export interface IEncrypt {
   value: string;
   secret: string;
 }
+
+export interface GetApplicationsQueryParams {
+  name?: string;
+  username?: string;
+  email?: string
+}

@@ -2,7 +2,7 @@ import { db } from "../db/dbMgr";
 import { Statement } from 'better-sqlite3'
 import type { IInsertData } from '../../types'
 import { encrypt, decrypt } from "../utils/encrypt";
-
+import type { GetApplicationsQueryParams } from "../../types";
 
 interface IApplicationData {
   name: string;
@@ -11,6 +11,7 @@ interface IApplicationData {
   password: string
 }
 
+// GET ONLY APPLICATIONS
 export const getApplications = async (): Promise<void> => {
   try {
     if (db) {
@@ -23,13 +24,19 @@ export const getApplications = async (): Promise<void> => {
   }
 }
 
-export const getApplicationsAndRelatedData = (): void => {
+
+// GET APPLICATION & RELATED
+// TODO: use the query to filter by a querystring
+// if there is query string modify the query to search based on that query
+export function getApplicationsAndRelatedData(): void;
+export function getApplicationsAndRelatedData(params: GetApplicationsQueryParams): void;
+export function getApplicationsAndRelatedData ({ name, username, email }: GetApplicationsQueryParams = {}): void  {
   try {
     if (!db) {
       throw new Error("db is down")
     }
     
-    const query = ' SELECT a.name, u.value as username, e.value as email, p.value as password \
+    let query = ' SELECT a.name, u.value as username, e.value as email, p.value as password \
                     FROM application a \
                     INNER JOIN credentials c \
                     ON c.application_id = a.id \
@@ -40,8 +47,34 @@ export const getApplicationsAndRelatedData = (): void => {
                     LEFT JOIN email e \
                     ON e.credentials_id = c.id'
 
+
+    const params: string[] = []
+    if (name || username || email) {
+      query += ' WHERE '
+      const conditions: string[] = []
+
+      if (name) {
+        conditions.push('a.name = ?')
+        params.push(name)
+      }
+
+      if (username) {
+        conditions.push('u.value = ?')
+        params.push(username)
+      }
+
+      if (email) {
+        conditions.push('e.value = ?')
+        params.push(email)
+      }
+
+      query += conditions.join(' AND ')
+    }
+
+    console.log("the final query", query)
+
     const readQuery = db.prepare(query)
-    const data = readQuery.all() as IApplicationData[];
+    const data = readQuery.all(params) as IApplicationData[];
     
     const decryptedData = data.map(d => {
       if (d.password) {
@@ -55,6 +88,7 @@ export const getApplicationsAndRelatedData = (): void => {
   }
 }
 
+// INSERT
 export const insertApplication = async ({
   applicationName,
   email,
