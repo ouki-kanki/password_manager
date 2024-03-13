@@ -1,0 +1,16 @@
+.settings-layout__container {
+
+  nav {
+   // border: 1px solid red;
+   display: flex;
+ 
+   a {
+     margin-right: 5px;
+     padding: 5px 10px;
+   }
+  } 
+ }
+ 
+ .settings-navlink__active {
+   color: red;
+ }

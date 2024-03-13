@@ -12,23 +12,28 @@ export const Sidebar = ({ isSidebarVisible }: ISidebarProps): JSX.Element => {
       <div className="__title">
         <Link to='/'>Pass Man</Link>
       </div>
-      <ul>
+      <nav>
         <li className=''>
           <NavLink 
-            to='/'
+            to='.'
             className={({ isActive }) => isActive ? 'sidebar__container__link-active' : ''}
             >Home</NavLink>
         </li>
         <li>
           <NavLink 
-            to='/insert'
+            to='insert'
             end // if there is nested route it will end the matching here
             className={({ isActive }) => isActive ? 'sidebar__container__link-active' : ''}
             >New</NavLink>
         </li>
-        <li>settings</li>
+        <li>
+          <NavLink
+           to='settings'
+           className={({ isActive }) => isActive ? 'sidebar__container__link-active' : ''}
+          >Settings</NavLink>
+        </li>
         <li>boing</li>
-      </ul>
+      </nav>
     </div>
   )
 }

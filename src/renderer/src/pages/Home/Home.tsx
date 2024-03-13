@@ -12,7 +12,7 @@ export const Home = ({ handleSidebarVisibility }: IHomeProps): JSX.Element => {
   return (
     <div className='home__container'>
       <Navbar handleSidebarVisibility={handleSidebarVisibility}/>
-      <section>
+      <section className='home__section'>
         <Outlet/>
       </section>
     </div>
