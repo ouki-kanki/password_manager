@@ -132,6 +132,7 @@ export const insertApplication = async ({
           }
 
           if (password) {
+            console.log("inside the if of pass", password)
             const encryptedPass = encrypt(password);
             
             const insertToPass = db.prepare(
@@ -141,7 +142,7 @@ export const insertApplication = async ({
           }
         }
       } catch (error) {
-        console.log("the error", error)
+        console.log("error in inserting data", error)
       }
     })
     transaction()

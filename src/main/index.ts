@@ -14,12 +14,15 @@ contextMenu({
   showInspectElement: true,
 })
 
+console.log(join(__dirname, '../../resources/icon.png'))
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
+    icon: (join(__dirname, '../../resources/icon.png')),
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {

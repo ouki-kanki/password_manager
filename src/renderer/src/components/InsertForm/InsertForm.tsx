@@ -1,7 +1,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import './insertForm.scss'
 import type { IInsertData } from '../../../../types'
-
+import { Input, Form } from 'antd'
 
 interface IInsertFormProps {
   handleInsertApplicationData: (data: IInsertData) => void;
@@ -81,14 +81,13 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
 
         <fieldset>
           <label htmlFor="password">Password</label>
-          <input 
+          <Input.Password 
             type="password"
             name='password'
             id='password'
             value={insertData.password} 
             onChange={handleChange}/>
         </fieldset>
-
 
         <fieldset className='insert-form__action'>
           <button type='submit'>insert Application</button>

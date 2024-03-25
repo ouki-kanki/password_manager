@@ -6,7 +6,7 @@ const algo = 'aes-256-cbc'
  * createCipheriv needs the buffers
  * @returns 
  */
-const getKeyBuffers = () => {
+const getKeyBuffers = (): Buffer[] => {
   const secret_buffer = Buffer.from(process.env.ENCRYPT_KEY as string, 'hex')
   const iv_buffer = Buffer.from(process.env.IV as string, 'hex')
 
@@ -22,14 +22,14 @@ const getKeyBuffers = () => {
  * @returns 
  */
 export const encrypt = (value: string): string => {
-  const [secret_buffer, iv_buffer] = getKeyBuffers()  
-  const cipher = crypto.createCipheriv(algo, 
-    secret_buffer, iv_buffer);
+  // TODO: it there is no .env to get the variables there is no feedback for the error
+  const [secret_buffer, iv_buffer] = getKeyBuffers()
+  const cipher = crypto.createCipheriv(algo, secret_buffer, iv_buffer);
     
-    let encrypted = cipher.update(value, 'utf-8', 'hex');
-    encrypted += cipher.final('hex')
+  let encrypted = cipher.update(value, 'utf-8', 'hex');
+  encrypted += cipher.final('hex')
     
-    return encrypted
+  return encrypted
 }
   
 /**
