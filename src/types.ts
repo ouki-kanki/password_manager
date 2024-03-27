@@ -15,3 +15,10 @@ export interface GetApplicationsQueryParams {
   username?: string;
   email?: string
 }
+
+export interface ApplicationData {
+  name: string;
+  email: string;
+  username: string;
+  password: string
+}

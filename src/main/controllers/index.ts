@@ -2,14 +2,7 @@ import { db } from "../db/dbMgr";
 import { Statement } from 'better-sqlite3'
 import type { IInsertData } from '../../types'
 import { encrypt, decrypt } from "../utils/encrypt";
-import type { GetApplicationsQueryParams } from "../../types";
-
-interface IApplicationData {
-  name: string;
-  username: string;
-  email: string;
-  password: string
-}
+import type { GetApplicationsQueryParams, ApplicationData } from "../../types";
 
 // GET ONLY APPLICATIONS
 export const getApplications = async (): Promise<void> => {
@@ -28,9 +21,9 @@ export const getApplications = async (): Promise<void> => {
 // GET APPLICATION & RELATED
 // TODO: use the query to filter by a querystring
 // if there is query string modify the query to search based on that query
-export function getApplicationsAndRelatedData(): void;
-export function getApplicationsAndRelatedData(params: GetApplicationsQueryParams): void;
-export function getApplicationsAndRelatedData ({ name, username, email }: GetApplicationsQueryParams = {}): void  {
+export function getApplicationsAndRelatedData(): ApplicationData;
+export function getApplicationsAndRelatedData(params: GetApplicationsQueryParams): ApplicationData;
+export function getApplicationsAndRelatedData ({ name, username, email }: GetApplicationsQueryParams = {}): ApplicationData  {
   try {
     if (!db) {
       throw new Error("db is down")
@@ -54,18 +47,18 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
       const conditions: string[] = []
 
       if (name) {
-        conditions.push('a.name = ?')
-        params.push(name)
+        conditions.push('a.name LIKE ?')
+        params.push(`%${name}%`)
       }
 
       if (username) {
-        conditions.push('u.value = ?')
-        params.push(username)
+        conditions.push('u.value LIKE ?')
+        params.push(`%${username}%`)
       }
 
       if (email) {
-        conditions.push('e.value = ?')
-        params.push(email)
+        conditions.push('e.value LIKE ?')
+        params.push(`%${email}%`)
       }
 
       query += conditions.join(' AND ')
@@ -74,7 +67,7 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
     console.log("the final query", query)
 
     const readQuery = db.prepare(query)
-    const data = readQuery.all(params) as IApplicationData[];
+    const data = readQuery.all(params) as ApplicationData[];
     
     const decryptedData = data.map(d => {
       if (d.password) {
@@ -82,7 +75,9 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
       }
       return d
     })
-    console.log("the decrypted data", decryptedData)
+    // console.log("the decrypted data", decryptedData)
+
+    return decryptedData
   } catch (error) {
     console.log(error)
   }
