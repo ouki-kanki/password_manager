@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useDebounce } from '@renderer/hooks/useDebounce';
 import './dashboard.scss';
+
 import { ApplicationList } from '@renderer/components/ApplicationList/ApplicationList';
 import Versions from '../../components/Versions'
+import { ControlPanel } from '@renderer/components/ControlPanel/ControlPanel';
 
 import { Button, Select, Space, Input } from 'antd'
 import type { ApplicationData } from 'src/types';
-import { useDebounce } from '@renderer/hooks/useDebounce';
 
 interface IDashProps {
   getApplications: () => void
@@ -17,16 +19,13 @@ interface IDashProps {
 export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Element => {
   const [applications, setApplications] = useState<Array<ApplicationData>>([])
   const [isLoading, setIsLoading] = useState(false)
-  const [name, setName] = useState('')
+  const [applicationName, setApplicationName] = useState('')
   const [username, setUserName] = useState('')
   const [email, setEmail] = useState('')
   
-  const debouncedName = useDebounce(name)
+  const debouncedName = useDebounce(applicationName)
   const debouncedUsername = useDebounce(username)
   const debouncedEmail = useDebounce(email)
-
-  // console.log("the debounced value", debouncedName)
-
 
   useEffect(() => {
     const getData = async () => {
@@ -40,15 +39,32 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
         setApplications(data)
       }
     }
-    console.log("the applications", applications)
-
+    
     getData()
   }, [debouncedName, debouncedEmail, debouncedUsername])
-
-  const handleGetData = (name?: string, username?: string, email?: string) => {
-    // const data 
+  
+  console.log("the applications", applications)
+  
+  const handleApplicationNameChange = ({ target: { value }}:React.ChangeEvent<HTMLInputElement>): void => {
+    console.log("inside the name", value)
+    setApplicationName(value)
   }
 
+  const handleUsernameChange = ({ target: { value }}:React.ChangeEvent<HTMLInputElement>): void => {
+    console.log("isnide the username", value)
+    setUserName(value)
+  }
+   
+  const handleEmailChange = ({ target: { value }}:React.ChangeEvent<HTMLInputElement>): void => {
+    console.log("isndie the email", value)
+    setEmail(value)
+  }
+
+  const handleClearFilters = (): void => {
+    setApplicationName('')
+    setEmail('')
+    setUserName('')
+  }
 
   return (
     <div className="dashboard-container">
@@ -92,6 +108,15 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
         </div>
       </div>
 
+      <ControlPanel
+        applicationName={applicationName}
+        username={username}
+        email={email}
+        handleApplicationName={handleApplicationNameChange}
+        handleEmail={handleEmailChange}
+        handleUsername={handleUsernameChange}
+        onClearAll={handleClearFilters}
+      />
       <ApplicationList data={applications}/>
 
       <Versions></Versions>
