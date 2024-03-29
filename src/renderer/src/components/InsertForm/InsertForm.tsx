@@ -2,12 +2,14 @@ import { useState, ChangeEvent, FormEvent } from 'react'
 import './insertForm.scss'
 import type { IInsertData } from '../../../../types'
 import { Input, Form } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 interface IInsertFormProps {
   handleInsertApplicationData: (data: IInsertData) => void;
 }
 
 export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): JSX.Element => {
+  const navigate = useNavigate()
   const [insertData, setInsertData] = useState<IInsertData>({
     applicationName: '',
     username: '',
@@ -31,8 +33,8 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
     if (!data.applicationName) {
       return
     }
-    
 
+    // TODO: catch the error if cannot add and give feedback . cancel the navigation
     handleInsertApplicationData(data)
 
     setInsertData({
@@ -43,6 +45,7 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
       email: '',
       password: ''
     })
+    navigate(-1)
   }
 
   return (

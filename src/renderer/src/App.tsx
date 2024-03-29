@@ -16,7 +16,6 @@ import { Security } from './pages/Settings/Security/Security';
 import { Ui } from './pages/Settings/Ui/Ui';
 
 
-
 function App(): JSX.Element {
   useGetPath((location) => console.log(location.pathname))
   // TODO: set default behaviour from settings maybe with context or redux toolkit
@@ -37,7 +36,9 @@ function App(): JSX.Element {
 
   return (
     <div className='app__container'>
-      <Sidebar isSidebarVisible={isSidebarVisible}/>
+      <Sidebar
+        handleSideBarVisibility={handleSideBarVisibility} 
+        isSidebarVisible={isSidebarVisible}/>
       <Routes>
         <Route path='/' element={<Home handleSidebarVisibility={handleSideBarVisibility}/>}>
           <Route index element={<Dashboard getApplications={getApplications} ipcHandle={ipcHandle}/>}/>

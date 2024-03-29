@@ -1,5 +1,7 @@
 import React from 'react'
 import './controlpanel.scss'
+import { Divider, Collapse } from 'antd'
+
 
 import { Input, Space } from 'antd'
 
@@ -44,25 +46,34 @@ export const ControlPanel = ({ applicationName, email, username, handleApplicati
 
   return (
     <div className='control-panel'>
-      <h2>Controls</h2>
-      <form className="control-panel__controls-container">
-
-        {getFormData(applicationName, username, email, handleApplicationName, handleUsername, handleEmail).map((data) => (
-          <div className="control-panel__formField" key={data.id}>
-            <label htmlFor={data.id}>{data.title}</label>
-            <Space.Compact>
-              <Input
-                onChange={data.onChange}
-                value={data.name}
-              />
-            </Space.Compact>
-          </div>
-        ))} 
-      </form>
-      <button 
-        style={{ backgroundColor: 'tomato' }}
-        onClick={onClearAll}
-        >clear</button>
+      <Collapse
+        items={[{
+          key: '1',
+          label: 'Filter',
+          children: (
+            <>
+              <form className="control-panel__controls-container">
+        
+                {getFormData(applicationName, username, email, handleApplicationName, handleUsername, handleEmail).map((data) => (
+                  <div className="control-panel__formField" key={data.id}>
+                    <label htmlFor={data.id}>{data.title}</label>
+                    <Space.Compact>
+                      <Input
+                        onChange={data.onChange}
+                        value={data.name}
+                      />
+                    </Space.Compact>
+                  </div>
+                ))} 
+              </form>
+              <button 
+                style={{ backgroundColor: 'tomato' }}
+                onClick={onClearAll}
+                >clear</button>
+            </>
+          )
+        }]}
+      />
     </div>
 
   )

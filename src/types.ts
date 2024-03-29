@@ -17,6 +17,7 @@ export interface GetApplicationsQueryParams {
 }
 
 export interface ApplicationData {
+  id: string
   name: string;
   email: string;
   username: string;

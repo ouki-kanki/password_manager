@@ -1,0 +1,13 @@
+.application_list-container {
+  margin-top: 20px;
+}
+
+.application_list-password {
+  user-select: text;
+
+  &-action {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+

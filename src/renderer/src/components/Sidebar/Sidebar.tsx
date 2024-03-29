@@ -1,18 +1,22 @@
 import './sidebar.scss'
+import { LeftOutlined } from '@ant-design/icons';
 import { Link, NavLink } from 'react-router-dom';
 
 
 interface ISidebarProps  {
   isSidebarVisible: boolean;
+  handleSideBarVisibility: () => void;
 }
 
-export const Sidebar = ({ isSidebarVisible }: ISidebarProps): JSX.Element => {
+export const Sidebar = ({ isSidebarVisible, handleSideBarVisibility }: ISidebarProps): JSX.Element => {
+  const isVisible = isSidebarVisible ? { display: 'block' } : { display: 'none' }
+
   return (
     <div className={`sidebar__container${!isSidebarVisible ? "-hidden" : ""}`}>
-      <div className="__title">
+      <div className="__title" style={isVisible}>
         <Link to='/'>Pass Man</Link>
       </div>
-      <nav>
+      <nav style={isVisible}>
         <li className=''>
           <NavLink 
             to='.'
@@ -33,6 +37,11 @@ export const Sidebar = ({ isSidebarVisible }: ISidebarProps): JSX.Element => {
           >Settings</NavLink>
         </li>
       </nav>
+      <div
+        onClick={handleSideBarVisibility} 
+        className='sidebar__btn-close'>
+      <LeftOutlined />
+      </div>
     </div>
   )
 }

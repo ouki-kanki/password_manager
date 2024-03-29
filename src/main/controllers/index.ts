@@ -29,7 +29,7 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
       throw new Error("db is down")
     }
     
-    let query = ' SELECT a.name, u.value as username, e.value as email, p.value as password \
+    let query = ' SELECT a.id, a.name, u.value as username, e.value as email, p.value as password \
                     FROM application a \
                     INNER JOIN credentials c \
                     ON c.application_id = a.id \

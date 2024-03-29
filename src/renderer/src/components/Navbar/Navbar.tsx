@@ -7,7 +7,7 @@ interface INavbarProps {
 export const Navbar = ({ handleSidebarVisibility }: INavbarProps): JSX.Element => {
   return (
     <div>
-      <button onClick={handleSidebarVisibility}>close side</button>
+      {/* <button onClick={handleSidebarVisibility}>close side</button> */}
 
     </div>
   )

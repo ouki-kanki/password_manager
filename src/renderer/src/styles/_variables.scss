@@ -29,13 +29,14 @@ $color-background-black: $ev-c-black;
 $color-background-mute: #282828;
 $color-background-soft: $ev-c-black-soft;
 
-$color-text: $ev-c-text-1;
+$color-text: $ev-c-gray-3;
 
 
 // theme
 $background-dark: $color-background-black;
 $background-white: rgb(248, 234, 234);
 
-$backround-color-main: $background-dark;
+// $backround-color-main: $background-dark;
 $background-color-dash: $ev-c-black-soft;
 // $backround-color-main: $background-white;
+$backround-color-main: $white_one;
