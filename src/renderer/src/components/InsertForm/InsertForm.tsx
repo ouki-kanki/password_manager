@@ -1,8 +1,13 @@
 import { useState, ChangeEvent, FormEvent } from 'react'
 import './insertForm.scss'
 import type { IInsertData } from '../../../../types'
-import { Input, Form } from 'antd'
+import { Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
+
+import { Button, Tooltip } from 'antd'
+import { KeyOutlined, ScissorOutlined } from '@ant-design/icons'
+
+import { copyToClip } from '@renderer/utils/copyToClip'
 
 interface IInsertFormProps {
   handleInsertApplicationData: (data: IInsertData) => void;
@@ -17,6 +22,16 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
     password: ''
   })
 
+  const generateRandomPass = (): void => {
+    const randomPass = window.api.generateRandomPassword()
+
+    setInsertData(prevData => {
+      return {
+        ...prevData,
+        password: randomPass
+      }
+    })
+  }
 
   const handleChange = ({ target: { name, value }}: ChangeEvent<HTMLInputElement>): void => {
     setInsertData((prevData) => {
@@ -39,8 +54,6 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
 
     setInsertData({
       applicationName: '',
-
-
       username: '',
       email: '',
       password: ''
@@ -58,38 +71,55 @@ export const InsertForm = ({ handleInsertApplicationData }: IInsertFormProps): J
             type="text"
             name='applicationName'
             id='app_name'
-            value={insertData.applicationName} 
+            value={insertData.applicationName}
             onChange={handleChange}/>
         </fieldset>
 
         <fieldset>
           <label htmlFor="user">Username</label>
-          <input 
+          <input
             type="text"
             name='username'
             id='user'
-            value={insertData.username} 
+            value={insertData.username}
             onChange={handleChange}/>
       </fieldset>
 
         <fieldset>
           <label htmlFor="email">Email</label>
-          <input 
+          <input
             type="email"
             name='email'
             id='email'
-            value={insertData.email} 
+            value={insertData.email}
             onChange={handleChange}/>
         </fieldset>
 
         <fieldset>
           <label htmlFor="password">Password</label>
-          <Input.Password 
-            type="password"
-            name='password'
-            id='password'
-            value={insertData.password} 
-            onChange={handleChange}/>
+          <div>
+            <Input.Password
+              className='insert-form__pass_input'
+              type="password"
+              name='password'
+              id='password'
+              value={insertData.password}
+              onChange={handleChange}/>
+
+              <Tooltip title='copy to clip'>
+                <Button
+                  onClick={() => copyToClip(insertData.password)}>
+                  <ScissorOutlined/>
+                </Button>
+              </Tooltip>
+
+              <Tooltip title='generate a random password'>
+                <Button
+                  onClick={generateRandomPass}>
+                  <KeyOutlined/>
+                </Button>
+              </Tooltip>
+          </div>
         </fieldset>
 
         <fieldset className='insert-form__action'>

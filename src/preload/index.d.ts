@@ -11,7 +11,7 @@ declare global {
       getApplications: () => void;
       getApplicationsAndRelatedData: (params?: GetApplicationsQueryParams) => Array<ApplicationData>;
       insertApplication: (value: IInsertData) => void;
-      testCrypto: (value: string) => void;
+      generateRandomPassword: () => string
     }
   }
 }

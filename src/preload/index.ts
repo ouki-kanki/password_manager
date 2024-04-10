@@ -1,13 +1,15 @@
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { getApplications, insertApplication, testCrypto, getApplicationsAndRelatedData } from '../main/controllers'
+import { genPassV1 as generateRandomPassword } from '../main/utils/genRAndPass'
 
 // Custom APIs for renderer
 const api = {
   getApplications,
   insertApplication,
   testCrypto,
-  getApplicationsAndRelatedData
+  getApplicationsAndRelatedData,
+  generateRandomPassword
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

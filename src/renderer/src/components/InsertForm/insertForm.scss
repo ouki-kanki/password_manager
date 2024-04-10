@@ -1,7 +1,7 @@
 // @use '../../styles/main' as *;
 
 .insert-form__container {
-  width: 350px;
+  width: 500px;
 
   fieldset {
     display: flex;
@@ -16,3 +16,6 @@
 }
 
 
+.insert-form__pass_input {
+  width: 250px;
+}
