@@ -4,23 +4,22 @@ import type { IInsertData } from '../../types'
 import { encrypt, decrypt } from "../utils/encrypt";
 import type { GetApplicationsQueryParams, ApplicationData } from "../../types";
 
-// GET ONLY APPLICATIONS
+// GET ONLY APPLICATIONS, not used
 export const getApplications = async (): Promise<void> => {
   try {
     if (db) {
       const query = 'SELECT * FROM application'
       const readQuery = db.prepare(query)
       console.log(readQuery.all())
-    } 
+    }
   } catch (error) {
+    // TODO: send the error to the client
     console.log(error)
   }
 }
 
 
-// GET APPLICATION & RELATED
-// TODO: use the query to filter by a querystring
-// if there is query string modify the query to search based on that query
+// GET APPLICATION & RELATED / filter by appication username and email
 export function getApplicationsAndRelatedData(): ApplicationData;
 export function getApplicationsAndRelatedData(params: GetApplicationsQueryParams): ApplicationData;
 export function getApplicationsAndRelatedData ({ name, username, email }: GetApplicationsQueryParams = {}): ApplicationData  {
@@ -28,7 +27,7 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
     if (!db) {
       throw new Error("db is down")
     }
-    
+
     let query = ' SELECT a.id, a.name, u.value as username, e.value as email, p.value as password \
                     FROM application a \
                     INNER JOIN credentials c \
@@ -38,7 +37,8 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
                     LEFT JOIN username u \
                     ON u.credentials_id = c.id \
                     LEFT JOIN email e \
-                    ON e.credentials_id = c.id'
+                    ON e.credentials_id = c.id \
+                    ORDER BY a.created_at DESC'
 
 
     const params: string[] = []
@@ -64,11 +64,11 @@ export function getApplicationsAndRelatedData ({ name, username, email }: GetApp
       query += conditions.join(' AND ')
     }
 
-    console.log("the final query", query)
+    // console.log("the final query", query)
 
     const readQuery = db.prepare(query)
     const data = readQuery.all(params) as ApplicationData[];
-    
+
     const decryptedData = data.map(d => {
       if (d.password) {
         d.password = decrypt(d.password)
@@ -119,7 +119,7 @@ export const insertApplication = async ({
               'INSERT INTO username (credentials_id, value) VALUES (?, ?)')
             insertToUser.run(credId, username)
           }
-          
+
           if (email) {
             const insertToEmail = db.prepare(
               'INSERT INTO email (credentials_id, value) VALUES (?, ?)')
@@ -129,7 +129,7 @@ export const insertApplication = async ({
           if (password) {
             console.log("inside the if of pass", password)
             const encryptedPass = encrypt(password);
-            
+
             const insertToPass = db.prepare(
               'INSERT INTO password (credentials_id, value) VALUES (?, ?)'
             )
@@ -144,6 +144,20 @@ export const insertApplication = async ({
   }
 }
 
+export const deleteApplication = (id: string) => {
+  if (db) {
+    const q = db.prepare('DELETE \
+                          FROM application \
+                          WHERE id = (?)')
+
+    const data = q.run(id)
+    console.log(data)
+    return data
+  }
+}
+
+
+// Obsolete
 export const testCrypto = (value: string): void => {
   encrypt(value);
 }

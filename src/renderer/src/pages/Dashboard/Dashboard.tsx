@@ -3,7 +3,6 @@ import { useDebounce } from '@renderer/hooks/useDebounce'
 import './dashboard.scss'
 
 import { ApplicationList } from '@renderer/components/ApplicationList/ApplicationList'
-import Versions from '../../components/Versions'
 import { ControlPanel } from '@renderer/components/ControlPanel/ControlPanel'
 
 import { Button, Select, Space, Input, Collapse, Divider } from 'antd'
@@ -26,22 +25,20 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
   const debouncedEmail = useDebounce(email)
 
   useEffect(() => {
-    const getData = (): void => {
-      const data = window.api.getApplicationsAndRelatedData({
-        name: debouncedName,
-        email: debouncedEmail,
-        username: debouncedUsername
-      })
-
-      if (data) {
-        setApplications(data)
-      }
-    }
-
     getData()
   }, [debouncedName, debouncedEmail, debouncedUsername])
 
-  // console.log(applications)
+  const getData = (): void => {
+    const data = window.api.getApplicationsAndRelatedData({
+      name: debouncedName,
+      email: debouncedEmail,
+      username: debouncedUsername
+    })
+
+    if (data) {
+      setApplications(data)
+    }
+  }
 
   const handleApplicationNameChange = ({
     target: { value }
@@ -117,7 +114,9 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
         handleUsername={handleUsernameChange}
         onClearAll={handleClearFilters}
       />
-      <ApplicationList data={applications} />
+      <ApplicationList
+        getData={getData}
+        data={applications} />
 
       {/* <Versions></Versions> */}
     </div>

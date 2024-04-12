@@ -59,15 +59,8 @@
   height: 100%;
   display: flex;
 
-
   .ant-spin-container {
-    // height: 300px;
-    // height: 73%;
     flex: 1 1 auto;
-    // @include b_tomato;
-    // border: 1px solid red;
-    // height: 100vh;
-    // height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -86,3 +79,80 @@
 }
 
 
+
+.application-list-edit-tooltip {
+  // display: none;
+  // animation: hideToUp .3 ease-in forwards;
+
+  &--show {
+    // animation: showFromUp .3 ease-in  forwards;
+
+  }
+}
+
+.application-list-del-tooltip {
+
+
+  &--show {
+
+  }
+}
+
+
+@keyframes hideToUp {
+  0% {
+    transform: translatey(0);
+  }
+  50% {
+    transform: translateY(5%);
+  }
+
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes showFromUp {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(5%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hideToDown {
+  0% {
+    transform: translateX(0);
+    width: 170px;
+  }
+  50% {
+    transform: translateX(5%);
+    width: calc(170px + 5%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+    width: 0px;
+  }
+}
+
+@keyframes showFromDown {
+  0% {
+    transform: translateX(-100%);
+    width: 0;
+  }
+  50% {
+    transform: translateX(5%);
+    width: calc(170px + 5%);
+  }
+
+  100% {
+    transform: translateX(0);
+    width: 170px;
+  }
+}

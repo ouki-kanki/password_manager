@@ -1,13 +1,12 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import './applicationList.scss'
 import { useSearchParams } from 'react-router-dom'
 import { Button, Col, Divider } from 'antd'
 import type { ApplicationData } from 'src/types'
-import { ScissorOutlined, KeyOutlined } from '@ant-design/icons'
+import { ScissorOutlined, DeleteOutlined, SaveOutlined, ExperimentOutlined, WindowsFilled } from '@ant-design/icons'
 import { copyToClip } from '@renderer/utils/copyToClip'
 
-import { Table, Input, Tooltip, Switch, Space } from 'antd'
-
+import { Table, Input, Tooltip, Switch, Space, Modal } from 'antd'
 
 interface TableData extends ApplicationData {
   key: React.Key
@@ -15,18 +14,40 @@ interface TableData extends ApplicationData {
 
 
 interface ApplicationListProps {
-  data: ApplicationData[]
+  data: ApplicationData[];
+  getData: () => void
 }
 
 const {Column } = Table
 
-export const ApplicationList = ({ data }: ApplicationListProps): JSX.Element => {
+export const ApplicationList = ({ data, getData }: ApplicationListProps): JSX.Element => {
   const [searchParams, setSearchParams] = useSearchParams()
+  const [openModal, setOpenModal] = useState(false)
+  const [isInEdit, setIsInEdit] = useState(true)
   const tableData: TableData[] = data.map((item, id) => ({ ...item, key: id }))
 
   const generateRandomPass = (): void => {
     const pass = window.api.generateRandomPassword()
     console.log("the pass", pass)
+  }
+
+  const handleDelete = (id: string): void => {
+    window.api.deleteApplication(id)
+    getData()
+  }
+
+  // modal methods
+  const showModal = (): void => {
+    setOpenModal(true)
+  }
+
+  const handleOk = (id: string): void => {
+    handleDelete(id)
+    setOpenModal(false)
+  }
+
+  const handleCancel = (): void => {
+    setOpenModal(false)
   }
 
   return (
@@ -40,7 +61,8 @@ export const ApplicationList = ({ data }: ApplicationListProps): JSX.Element => 
       </div>
       <Space className='insert-form__controls-space'>
         <Switch
-          // checked={() => {}}
+          checked={isInEdit}
+          onChange={() => setIsInEdit(prev => !prev)}
           checkedChildren='edit'
           unCheckedChildren='view'
         />
@@ -67,18 +89,57 @@ export const ApplicationList = ({ data }: ApplicationListProps): JSX.Element => 
               type='password'
               value={record.password}
             />
-            <Button
-              onClick={() => copyToClip(record.password)}
-            >
-              <ScissorOutlined />
-            </Button >
-            <Tooltip title='generate a random password'>
+            {!isInEdit && (
               <Button
-                onClick={generateRandomPass}
+                onClick={() => copyToClip(record.password)}
               >
-                <KeyOutlined />
-              </Button>
-            </Tooltip>
+                <ScissorOutlined />
+              </Button >
+            )
+
+            }
+            {isInEdit && (
+              <Tooltip
+                title='generate random pass'
+                >
+                <Button
+                  onClick={generateRandomPass}
+                >
+                  <ExperimentOutlined />
+                </Button>
+              </Tooltip>
+            )}
+            {isInEdit && (
+              <Tooltip
+                title='save'
+                className={`application-list-edit-tooltip${isInEdit ? '--show' : ''}`}
+                >
+                <Button
+                  style={{backgroundColor: 'lightgreen'}}
+                  onClick={generateRandomPass}
+                >
+                  <SaveOutlined />
+                </Button>
+              </Tooltip>
+
+            )}
+            {isInEdit && (
+                <Tooltip title='delete-record' className='application-list-del-tooltip'>
+                  <Button
+                    style={{ backgroundColor: 'tomato' }}
+                    onClick={showModal}
+                  >
+                    <DeleteOutlined />
+                  </Button>
+                </Tooltip>
+            )}
+            <Modal
+              open={openModal}
+              onOk={() => handleOk(record.id)}
+              onCancel={handleCancel}
+            >
+              <p>Are you Sure you want to delete {record.name}?</p>
+            </Modal>
           </div>
           )}
           key="password"

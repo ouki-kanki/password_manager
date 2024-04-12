@@ -11,7 +11,8 @@ declare global {
       getApplications: () => void;
       getApplicationsAndRelatedData: (params?: GetApplicationsQueryParams) => Array<ApplicationData>;
       insertApplication: (value: IInsertData) => void;
-      generateRandomPassword: () => string
+      deleteApplication: (id: string) => void;
+      generateRandomPassword: () => string;
     }
   }
 }

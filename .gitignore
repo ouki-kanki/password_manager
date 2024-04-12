@@ -14,6 +14,7 @@ release
 *.sqlite-shm
 *.sqlite-wal
 *.sql
+*.sqbpro
 
 # Optional npm cache directory
 .npm
@@ -43,6 +44,6 @@ release
 *.sln
 *.sw?
 
-# static assets 
+# static assets
 static
 assets
