@@ -27,7 +27,6 @@ export const genPassV1 = (): string => {
   // get random value between min and max, this is the number of symbols that will be injected inside the password string in random places
   const randomNumberOfSymbols = Math.floor(Math.random() * (max - min + 1) + min)
 
-  // TODO: typescript complains fix the bug
   const finalSymbolPool: string[] = []
   for (let i=0; i < randomNumberOfSymbols; i++) {
     const randomIndexForSymbols = Math.floor(Math.random() * symbols.length)
@@ -43,7 +42,7 @@ export const genPassV1 = (): string => {
     }
     usedIndeces.push(randomInsertIndex)
 
-    // replace element of the passArray with a random symbol
+    // replace random element of the passArray with a random symbol
     passArr[randomInsertIndex] = finalSymbolPool[i]
   }
 

@@ -1,10 +1,12 @@
 .home__container {
   display: flex;
   flex-direction: column;
+  // @include b_tomato;
   // background-color: $background-color-dash;
   flex: 1;
 }
 
 .home__section {
   padding: 20px;
+  height: 100%;
 }

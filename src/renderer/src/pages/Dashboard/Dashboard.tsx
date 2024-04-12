@@ -90,7 +90,7 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
                   get Applications and related all with name
                 </button>
 
-                <div className="dashboard__actions-container">
+                {/* <div className="dashboard__actions-container">
                   <div className="action">
                     <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
                       Documentation
@@ -101,7 +101,7 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
                       Send IPC
                     </a>
                   </div>
-                </div>
+                </div> */}
               </>
             )
           }
@@ -119,7 +119,7 @@ export const Dashboard = ({ getApplications, ipcHandle }: IDashProps): JSX.Eleme
       />
       <ApplicationList data={applications} />
 
-      <Versions></Versions>
+      {/* <Versions></Versions> */}
     </div>
   )
 }

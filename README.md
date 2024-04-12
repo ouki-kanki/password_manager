@@ -3,9 +3,10 @@
 ## A password manager made with electron, React, TypeScript & sqlite3
 * based on electron build tooling [electron-vite](https://github.com/alex8088/electron-vite)
 
-## Recommended IDE Setup
+## features
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- filter apps by name, email, username
+- generate random passwords
 
 ## Project Setup
 

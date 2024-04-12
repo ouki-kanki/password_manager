@@ -1,5 +1,14 @@
+.app__container {
+  height: 100vh;
+}
+
 .application_list-container {
   margin-top: 20px;
+  // height: 100%;
+  flex: 1 1 auto;
+  // @include b_tomato;
+  display: flex;
+  flex-direction: column;
 }
 
 .application_list-password {
@@ -10,4 +19,70 @@
     justify-content: space-between;
   }
 }
+
+.insert-form__controls-space {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 0;
+}
+
+
+// ant overrides
+.ant.table.content {
+  background-color: black;
+}
+
+.application-list__table {
+  // background-color: red;
+
+}
+
+
+.ant-spin-nested-loading {
+  // background-color: red;
+  // border: 1px solid red;
+}
+
+.ant-table-wrapper.application-list__table {
+  // background-color: red;
+  // border: 1px solid red;
+}
+
+.ant-table-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  // border: 1px solid magenta;
+}
+
+.ant-spin-nested-loading {
+  height: 100%;
+  display: flex;
+
+
+  .ant-spin-container {
+    // height: 300px;
+    // height: 73%;
+    flex: 1 1 auto;
+    // @include b_tomato;
+    // border: 1px solid red;
+    // height: 100vh;
+    // height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+
+
+.ant-table {
+  // border: 1px solid brown;
+}
+
+.ant-pagination.ant-table-pagination {
+  // background-color: red;
+  // margin-top: auto;
+  // border: 1px solid orange;
+}
+
 

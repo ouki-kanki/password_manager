@@ -8,11 +8,22 @@
   font-weight: normal;
 }
 
+html {
+  margin: 0;
+  padding: 0;
+  background-color: red;
+}
+
 body {
   overflow: hidden;
   background-size: cover;
   user-select: none;
-  min-height: 100vh;
+  // min-height: 100vh;
+  height: 100vh;
+  // height: 100%;
+  // width: 100%;
+  margin: 0;
+  padding: 0;
   color: $color-text;
   background: $backround-color-main;
   background-image: url('../assets/wavy-lines.svg');
@@ -33,6 +44,21 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  // border: 3px solid tomato;
+  height: 100%;
+}
+
+// check if it does anything
+.full-screen-div {
+  width: 100vw;
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 @mixin fontBold {

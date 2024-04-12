@@ -1,5 +1,9 @@
+// @use './main.scss' as *;
+
 .app__container {
   display: flex;
+  height: 100%;
+  // @include b_tomato();
 }
 
 .nav_and_dash__container {

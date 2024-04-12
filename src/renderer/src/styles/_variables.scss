@@ -40,3 +40,12 @@ $background-white: rgb(248, 234, 234);
 $background-color-dash: $ev-c-black-soft;
 // $backround-color-main: $background-white;
 $backround-color-main: $white_one;
+
+
+@mixin b_tomato {
+  border: 3px solid tomato;
+}
+
+@mixin b_green {
+  border: 3px solid darkgreen;
+}

@@ -6,7 +6,7 @@ import type { ApplicationData } from 'src/types'
 import { ScissorOutlined, KeyOutlined } from '@ant-design/icons'
 import { copyToClip } from '@renderer/utils/copyToClip'
 
-import { Table, Input, Tooltip } from 'antd'
+import { Table, Input, Tooltip, Switch, Space } from 'antd'
 
 
 interface TableData extends ApplicationData {
@@ -38,8 +38,17 @@ export const ApplicationList = ({ data }: ApplicationListProps): JSX.Element => 
           <Link to={`${searchParamCreator('username', 'tom', searchParams)}`}>filter tom</Link>
         </Button> */}
       </div>
+      <Space className='insert-form__controls-space'>
+        <Switch
+          // checked={() => {}}
+          checkedChildren='edit'
+          unCheckedChildren='view'
+        />
+      </Space>
+
       <Table
         // title={() => <div>Applications</div>}
+        className='application-list__table'
         dataSource={tableData}
         // scroll={{y: 200 }}
         pagination={{pageSize: 5}}
