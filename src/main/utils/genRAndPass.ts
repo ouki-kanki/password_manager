@@ -33,6 +33,14 @@ export const genPassV1 = (): string => {
     finalSymbolPool.push(symbols[randomIndexForSymbols])
   }
 
+  // capitalize some random letters
+  const numberOfindicesToBeReplacedWithCapital = Math.floor(Math.random() * (4 - 1 + 1) + 1)
+
+  for (let i=0; i < numberOfindicesToBeReplacedWithCapital; i++) {
+    const randIndex = Math.floor(Math.random() * passArr.length)
+    passArr[randIndex] = passArr[randIndex].toUpperCase()
+  }
+
   // replace elements in random position of the passaar with elementsd from the symbols pool
   const usedIndeces: number[] = []
   for (const i in finalSymbolPool) {
@@ -45,6 +53,7 @@ export const genPassV1 = (): string => {
     // replace random element of the passArray with a random symbol
     passArr[randomInsertIndex] = finalSymbolPool[i]
   }
+
 
   return passArr.join('')
 }

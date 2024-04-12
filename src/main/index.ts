@@ -19,8 +19,8 @@ console.log(join(__dirname, '../../resources/icon.png'))
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1044,
+    height: 719,
     show: false,
     icon: (join(__dirname, '../../resources/icon.png')),
     autoHideMenuBar: true,
